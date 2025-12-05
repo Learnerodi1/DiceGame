@@ -1,0 +1,312 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} 
+@font-face {
+  font-family: "Skrine";
+  src: url(fonts/Skrine.otf);
+}
+@font-face {
+  font-family: "Bread";
+  src: url(fonts/DreamBaserRegular-YqqxL.ttf) format("truetype");
+}
+body{
+    background: url("images/bg5.jpg") no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+}
+#root{
+  height: 100%;
+}
+/* Dice */
+.dice{
+  height:120px ;
+  width: 120px;
+  display: flex;
+  max-width: 150px;
+  padding: 10px;
+  background-color: rgb(4, 4, 26);
+  border-radius: 20px;
+  border: 2px solid ;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.751);
+}
+.One{
+  justify-content: center;
+  align-items: center;
+}
+.Two, .Three, .Four, .Five, .Six{
+  flex-direction: column;
+  justify-content: space-between;
+}
+.Four, .Five, .Six{
+  position: relative;
+}
+.Four > :nth-of-type(3), .Four>:nth-of-type(4), .Five > :nth-of-type(2), .Five > :nth-of-type(5), .Six > :nth-of-type(4), .Six > :nth-of-type(5), .Six > :nth-of-type(6){
+  position: absolute;
+}
+.Four > :nth-of-type(3), .Five > :nth-of-type(2), .Six > :nth-of-type(6){
+  bottom: 10px;
+  right: 10px;
+}
+.Two >:first-child, .Three >:first-child, .Four > :nth-of-type(1), .Five > :nth-of-type(1), .Six > :nth-of-type(1){
+  align-self: flex-end;
+}
+.Three >:nth-of-type(2), .Five > :nth-of-type(3){
+  align-self: center;
+}
+.Six > :nth-of-type(5){
+  right: 10px;
+  top: 43.5px;
+}
+/* Header */
+header{
+  padding: 10px;
+  width: fit-content;
+  position: relative;
+  padding-top: 40px;
+}
+header img{
+  /* margin: auto; */
+  /* margin-top: 20px; */
+  display: block;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+}
+h1{
+  background-color: blue;
+  color: white;
+  text-transform: capitalize;
+  font-family: "Skrine";
+  font-size: 5rem;
+  gap: 20px;
+}
+h1 code{
+  color: rgb(232, 230, 242);
+  font-weight: bolder;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  padding: 10px;
+  font-family: "Bread";
+}
+/* Manin */
+main{
+  flex-direction: column;
+  gap: 50px;
+}
+main section, main{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+article.diceHolder>span.active{
+  opacity: 0;
+}
+article.diceHolder> #disabled{
+  background-color: rgb(214, 216, 234);
+  cursor:not-allowed;
+}
+article.diceHolder>span {
+  opacity: 1;
+  top: 0;
+  position: absolute;
+  display: block;
+  height: 120px;
+  width: 120px;
+  border-radius: 20px;
+  background-color: rgb(4, 4, 26);
+}
+article.diceHolder{
+  cursor: pointer;
+  position: relative;
+  border-radius: 20px;
+  width: fit-content;
+  height: fit-content;
+}
+/* Game Layout Design */
+.gameContainer{
+  margin: auto;
+  margin-top: 40px;
+  width: 85%;
+  padding-bottom: 50px;
+  position: relative;
+  height: 80vh;
+  /* background: url(./images/bg1.jpg); */
+  backdrop-filter: blur(10px);
+  background: linear-gradient(rgba(252, 248, 248, 0.173), rgba(238, 227, 227, 0.507));
+}
+.Computer{
+  display: flex;
+  /* flex-direction: column; */
+  /* border:3px solid white ; */
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 10px;
+  gap: 40px;
+}
+p{
+  font-family: "Bread";
+  font-size: 3rem;
+  background-color: azure;
+  padding: 10px;
+  text-align: center;
+}
+.PlayerDice > div  section code{
+  right: -10px;
+}
+.PlayerDice > div  section span{
+  left: -10px;
+}
+.PlayerDice > div  section span, .PlayerDice > div  section code{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.PlayerDice > div  section span, .PlayerDice > div  section code, .PlayerDice > div  section{
+  transform: translateY(-50%);
+  background-color: rgb(209, 244, 232);
+  top: 50%;
+} 
+.PlayerDice > div  section{
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  z-index: -1;
+}
+.PlayerDice > div {
+  width: 80%;
+  position: relative;
+  gap: 0px;
+}
+.ComputerDice, .PlayerDice >div, .PlayerDice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.PlayerDice p{
+  transform: rotate(90deg);
+}
+.Controls{
+  background-color: rgb(45, 40, 40);
+  bottom: -4vh;
+  display: flex;
+  gap: 20px;
+  padding: 20px 50px;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.552);
+}
+.Controls, .Results{
+  width: fit-content;
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+}
+.Controls button{
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  background-color: black;
+  /* padding: 20px;  */
+  width:30px;
+  height: 30px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.552);
+}
+.Results.active{
+  padding: 10px 30px;
+  top: 40px;
+  height: fit-content;
+}
+.Results{
+  top: 0px;
+  height:0 ;
+  color: azure; 
+  font-size: 1.5rem;
+  background-color: rgba(157, 255, 0, 0.325);
+  transition: .3s ease-in;
+}
+.Results code{
+  font-family: "Bread";
+}
+.ScoreBoard code{
+  font-family: "Bread";
+  margin-left: 10px;
+}
+.ScoreBoard{
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  background-color: aliceblue;
+  font-family: "Bread";
+  font-size: 2rem;
+  width: fit-content;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+/* GameMode */
+.Mode {
+  position: relative;
+  /* width: 30px; */
+  height: 30px;
+  background-color: blue;
+  font-family: "Bread";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  padding: 10px;
+  cursor: pointer;
+}
+.Mode article span:nth-of-type(2){
+  background-color: rgba(246, 246, 8, 0.321);
+}
+.Mode article span:nth-of-type(2).active{
+  background-color: rgb(246, 246, 8);
+}
+.Mode article span:last-child{
+  background-color: rgba(255, 0, 0, 0.496);
+}
+.Mode article span:last-child.active{
+  background-color: red;
+}
+.Mode article span:first-child{
+  background-color: rgba(14, 186, 14, 0.26);
+}
+.Mode article span:first-child.active{
+  background-color: rgb(14, 186, 14);
+}
+.Mode article span{
+  cursor: pointer;
+  padding: 3px 10px;
+  font-family: "Bread";
+  color: whitesmoke;
+  transition: .3s;
+  opacity: 1;
+}
+.Mode.active article, .Mode.active article span{
+  opacity: 0;
+  color: transparent;
+  top: -1320px;
+}
+.Mode article{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: rgb(125, 122, 118);
+  width: 200px;
+  padding: 10px;
+  top: -120px;
+  gap: 5px;
+  transition: .3s;
+  opacity: 1;
+}
