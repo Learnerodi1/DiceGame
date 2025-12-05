@@ -3,7 +3,7 @@ import { Dice } from "./Dice"
 import { CoverDice } from "./coverDice"
 import { Info } from "./DiceInfo"
 import mainLogo from "../images/dice.png"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome""
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 function arraYOfRandomNumber(number){
     let randomArr = []
