@@ -1,4 +1,4 @@
-import React,{Component, useEffect, useState} from "react"
+import React,{Component, useEffect, useState,useRef} from "react"
 import { Dice } from "./Dice"
 import { CoverDice } from "./coverDice"
 import { Info } from "./DiceInfo"
@@ -12,7 +12,6 @@ function arraYOfRandomNumber(number){
     }
     return randomArr
 }
-
 const arrOfEmoji =[
     "🔥",
     "🔥🔥",
@@ -34,6 +33,13 @@ const DiceInfo2MainUpdate = ()=>{
 }
 let count = 5
 const Game = ()=>{
+    let buttonRef = useRef(null)
+    let audioRef = useRef(null)
+    // useEffect(()=>{
+    //     audioRef.current.src = "../src/assets/audio/start.wav"
+    //     audioRef.current.currentTime = 0
+    //     audioRef.current.play()
+    // },[])
     // activeState
     const [active, updateActive] = useState("")
     // Mode 
@@ -42,8 +48,6 @@ const Game = ()=>{
         {mode : "Intermediate", number: 3, IsClassActive : false}, 
         {mode :"Hard", number : 2, IsClassActive : false}
     ])
-    // NumberForMode
-    const [numberForMode, updateNumberForMode] = useState(count)
     // First DiceInfo
     const[DiceInfo1, updateDiceInfo1] = React.useState(()=>Info)
     const[DiceInfo2, updateDiceInfo2] = React.useState(()=>DiceInfo2MainUpdate())
@@ -53,14 +57,17 @@ const Game = ()=>{
     // Winner
     const [gameWinner, updateGameWinner] = useState("OLooo")
     // This controlss the numbers on the computer's dice
-    const [computer, updateComputer] = React.useState(arraYOfRandomNumber(numberForMode - 1))
+    const [computer, updateComputer] = React.useState(arraYOfRandomNumber(count - 1))
     const [totalNumberForComputer, updateTotalNumberForComputer] = useState(0)
     // ScoreBoard
     const [score, updateScore] = useState(0)
+    // Sound source
+    let sound = ""
     // 
     const newPlay = () =>{
+        // updateNumberForMode(()=>count)
         updateScore(prev => totalNumberForPlayer > totalNumberForComputer && prev + 1 || prev)
-        updateComputer(arraYOfRandomNumber(numberForMode - 1))
+        updateComputer(arraYOfRandomNumber(count - 1))
         updateDiceInfo2(()=> DiceInfo2MainUpdate())
         updateNumberForPlayer([])
         updateGameWinner("")
@@ -68,15 +75,15 @@ const Game = ()=>{
         updateToatalNumberForPlayer(0)
         updateTotalNumberForComputer(0)
     }
-
+    
     const GettingDiceNumber = (id) =>{
-        if(numberForPlayer.length === numberForMode ){   
+        if(numberForPlayer.length === count ){   
             return
         };
         const identityNum = DiceInfo2.filter((information)=>id === information.uniqueId)
         const identity = [...numberForPlayer, identityNum[0].number]
         updateNumberForPlayer(identity)
-        if(identity.length == numberForMode){
+        if(identity.length == count){
             updateActive("active")    
             let PlayerTotal = identity.reduce((a,b)=> a + b)
             let ComputerTotal = computer.reduce((a,b)=>a + b)
@@ -84,10 +91,18 @@ const Game = ()=>{
             updateTotalNumberForComputer(ComputerTotal)
             updateGameWinner(() =>{
                 if(PlayerTotal > ComputerTotal ){
+                    // sound = "../src/assets/audio/winning.wav"
+                    audioRef.current.src = "../src/assets/audio/winning.wav"
+                    audioRef.current.currentTime = 0
+                    audioRef.current.play()
                     return "Player wins"
                 }
                 else if(ComputerTotal >PlayerTotal){
-                    return "Computer wins"
+                    audioRef.current.src = "../src/assets/audio/failure.mp3"
+                    audioRef.current.currentTime = 0
+                    audioRef.current.play()
+                    // audioRef.current.play()
+                    return ("Computer wins")
                 }
                 else{
                     return "Draw .. Nobody won"
@@ -101,8 +116,10 @@ const Game = ()=>{
         }))
     }
     const SettingMode = (id) =>{
-        updateNumberForMode(id)
+        count = id
+        updateScore(0)
         newPlay()
+        buttonRef.current.classList.add("active")
         updateGameMode(prev =>{
             return (
             prev.map((modes)=>{
@@ -112,7 +129,12 @@ const Game = ()=>{
             })
         )})
     }
-
+    const startGame = (e)=>{
+        audioRef.current.src = "../src/assets/audio/start.wav"
+        audioRef.current.currentTime = 0
+        audioRef.current.play()
+        e.target.closest("section").classList.toggle("active")
+    }
     return(
         <>
         {/* Header */}
@@ -144,7 +166,7 @@ const Game = ()=>{
                     {
                         DiceInfo2.map(((information, index) =>{
                             return(
-                                <CoverDice id = {information.number} name ={information.name} IsClassActive={information.IsClassActive} key={index} GettingDiceNumber= {GettingDiceNumber} uniqueId ={information.uniqueId} RemovingFunction={numberForPlayer.length == numberForMode && !information.IsClassActive ? true : false}/>
+                                <CoverDice id = {information.number} name ={information.name} IsClassActive={information.IsClassActive} key={index} GettingDiceNumber= {GettingDiceNumber} uniqueId ={information.uniqueId} RemovingFunction={numberForPlayer.length == count && !information.IsClassActive ? true : false}/>
                             )
                         }))    
                     }
@@ -158,7 +180,8 @@ const Game = ()=>{
             <section className="Controls">
                 <button onClick = {()=>newPlay()}> <img style={{width: "100%", height:"100%"}} src={mainLogo} alt="" /></button>
                 {/* <button onClick = {()=>startPlay()}> - </button> */}
-                <div className={`Mode`} onClick={(e)=>{
+                <div className={`Mode active`} ref={buttonRef} onClick={(e)=>{
+                    console.log(buttonRef.current)
                     e.target.classList.toggle("active")
                 }}>
                     Mode
@@ -179,12 +202,19 @@ const Game = ()=>{
             <section className={`Results ${active}`}>
                 <code>
                     {/* borderRadius */}
-                    {numberForPlayer.length == numberForMode && gameWinner}
+                    {numberForPlayer.length == count && gameWinner}
                  </code>
             </section>
             {/* ScoreBoard */}
             <section className="ScoreBoard">
                 Score : <code>{score}</code>
+            </section>
+            <section className="audio">
+                <audio ref={audioRef} src={null} controls ></audio>
+            </section>
+            <section className="gameTips active" >
+            <p>We have three game modes hard Intermediate and Easy. Each game mode has the number of dice to be choosen. The player has to choose the dice covered in black to reveal the main dice. The highest total number of dice is the winner. Click on the dice icon below to roll dice</p>
+            <button onClick={(e)=>startGame(e)}> Start</button>
             </section>
         </main>
         </>
