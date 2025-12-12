@@ -6,10 +6,15 @@ import newAudio from "./assets/audio/start.wav"
 function App() {
   const [Playername, setCount] = useState()
   const startGame = (e)=>{
-    const audio = new Audio(newAudio)
-    audio.currentTime = 0
-    audio.play()
-    e.target.closest("section").classList.toggle("active")
+    if(!Playername){
+      alert("add your name")
+    }
+    else{
+          const audio = new Audio(newAudio)
+          audio.currentTime = 0
+          audio.play()
+          e.target.closest("section").classList.toggle("active")
+        }
   }
 
   return (
