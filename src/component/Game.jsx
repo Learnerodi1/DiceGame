@@ -32,7 +32,7 @@ const DiceInfo2MainUpdate = ()=>{
     return newARR
 }
 let count = 5
-const Game = ()=>{
+const Game = (props)=>{
     let buttonRef = useRef(null)
     let audioRef = useRef(null)
     // useEffect(()=>{
@@ -95,7 +95,7 @@ const Game = ()=>{
                     audioRef.current.src = "../src/assets/audio/winning2.mp3"
                     audioRef.current.currentTime = 0
                     audioRef.current.play()
-                    return "Player wins"
+                    return  `${props.playerName} wins`
                 }
                 else if(ComputerTotal >PlayerTotal){
                     audioRef.current.src = "../src/assets/audio/failure.mp3"
@@ -181,7 +181,7 @@ const Game = ()=>{
             </section>
             {/* Player Dice Section */}
             <section className="PlayerDice">
-                <p>Player</p>
+                <p>{props.playerName}</p>
                 <div>
                     {
                         DiceInfo2.map(((information, index) =>{

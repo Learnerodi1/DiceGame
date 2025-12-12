@@ -329,8 +329,10 @@ p{
 }
 .gameTips.active p{
   background: rgba(38, 210, 118, 0.552);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 2rem;
   max-width: 300px;
+  font-size: 1.5rem;
   height: fit-content;
   padding: 20px;
   color: rgba(240, 248, 255, 0.796);
@@ -345,6 +347,14 @@ p{
 }
 .gameTips{
   display:none;
+}
+.gameTips input{
+  background-color: antiquewhite;
+  border: none;
+  outline: none;
+  width: 200px;
+  border-radius: 10px;
+  padding: 10px 30px;
 }
 
 /* Media query */
