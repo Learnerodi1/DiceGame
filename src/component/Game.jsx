@@ -2,6 +2,8 @@ import React,{Component, useEffect, useState,useRef} from "react"
 import { Dice } from "./Dice"
 import { CoverDice } from "./coverDice"
 import { Info } from "./DiceInfo"
+import newAudio1 from "../assets/audio/winning2.mp3"
+import newAudio2 from "../assets/audio/failure.mp3"
 import mainLogo from "../images/dice.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
@@ -34,7 +36,6 @@ const DiceInfo2MainUpdate = ()=>{
 let count = 5
 const Game = (props)=>{
     let buttonRef = useRef(null)
-    let audioRef = useRef(null)
     // useEffect(()=>{
     //     audioRef.current.src = "../src/assets/audio/start.wav"
     //     audioRef.current.currentTime = 0
@@ -92,15 +93,15 @@ const Game = (props)=>{
             updateGameWinner(() =>{
                 if(PlayerTotal > ComputerTotal ){
                     // sound = "../src/assets/audio/winning2.wav"
-                    audioRef.current.src = "../src/assets/audio/winning2.mp3"
-                    audioRef.current.currentTime = 0
-                    audioRef.current.play()
+                    const audio = new Audio(newAudio1)
+                    audio.currentTime = 0
+                    audio.play()
                     return  `${props.playerName} wins`
                 }
                 else if(ComputerTotal >PlayerTotal){
-                    audioRef.current.src = "../src/assets/audio/failure.mp3"
-                    audioRef.current.currentTime = 0
-                    audioRef.current.play()
+                    const audio2 = new Audio(newAudio2)
+                    audio2.currentTime = 0
+                    audio2.play()
                     // audioRef.current.play()
                     return ("Computer wins")
                 }
@@ -201,9 +202,6 @@ const Game = (props)=>{
                 <code>
                     {numberForPlayer.length == count && gameWinner}
                  </code>
-            </section>
-            <section className="audio">
-                <audio ref={audioRef} src={null} controls ></audio>
             </section>
         </main>
         </>
