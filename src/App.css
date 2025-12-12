@@ -15,11 +15,14 @@ body{
     background: url("images/bg5.jpg") no-repeat;
     background-size: 100% 100%;
     background-position: center;
-    height: 100vh;
+    /* height: 100vh; */
+    width: 100%;
+    background-attachment: fixed;
     overflow: hidden;
 }
 #root{
-  height: 100%;
+  height: 100vh;
+  width: 100%;
 }
 section.audio{
   display: none;
@@ -152,7 +155,7 @@ article.diceHolder{
   align-items: center;
   margin: auto;
   padding: 10px;
-  gap: 40px;
+  gap: 20px;
 }
 p{
   font-family: "Bread";
@@ -184,15 +187,15 @@ p{
   height: 20px;
   z-index: -1;
 }
-.PlayerDice > div {
-  width: 80%;
+.PlayerDice > div{
   position: relative;
   gap: 0px;
+  width: 80%;
 }
 .ComputerDice, .PlayerDice >div, .PlayerDice {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 20px;
 }
 .PlayerDice p{
@@ -218,7 +221,6 @@ p{
   outline: none;
   border-radius: 50%;
   background-color: black;
-  /* padding: 20px;  */
   width:30px;
   height: 30px;
   cursor: pointer;
@@ -259,7 +261,6 @@ p{
 /* GameMode */
 .Mode {
   position: relative;
-  /* width: 30px; */
   height: 30px;
   background-color: blue;
   font-family: "Bread";
@@ -316,7 +317,9 @@ p{
 /* GameTips */
 .gameTips.active{
   position: fixed;
+  top: 0;
   height: 100vh;
+  width: 100%;
   background: rgba(0, 0, 0, 0.552);
   display: flex;
   justify-content: center;
@@ -342,4 +345,112 @@ p{
 }
 .gameTips{
   display:none;
+}
+
+/* Media query */
+@media (max-width:1200px) {
+  body{
+    color: red;
+  }
+  section.Controls{
+    position: fixed;
+    top: 60vh;
+    right: 100px ;
+    height: fit-content;
+  }
+  .Computer{
+    margin-top: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .PlayerDice p{
+    transform: rotate(0deg);
+  }
+  .PlayerDice{
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .gameContainer{
+    height: fit-content;
+    /* overflow:visible; */
+    width: 90%;
+    /* margin: 0; */
+  }
+  .PlayerDice > div{
+    width: fit-content;
+    flex-wrap: wrap;
+    /* width: 25%; */
+  }
+  .ComputerDice{
+    flex-wrap: wrap;
+    /* width:  25%; */
+  }
+  #root{
+    height: fit-content;
+    /* width: fit-content; */
+  }
+  .Mode article{
+    max-width: 180px;
+    right: 0;
+  }
+}
+@media (max-width:902px) {
+  body{
+    overflow: unset;
+  }
+  .gameContainer{
+    margin-top: 0;
+    /* padding: 20px; */
+    /* height: 100vh; */
+  }
+  main{
+    flex-direction: row;
+  }
+  .PlayerDice{
+    justify-content: flex-start;
+  }
+  .PlayerDice > div  section{
+    display: none;
+  }
+  section.Controls{
+    top: 15vh;
+  }
+  .ScoreBoard{
+    top: 5vh;
+    z-index: -1;
+  }
+}
+@media (max-width:700px) {
+}
+@media (max-width:530px) {
+  .ScoreBoard, section.Controls{
+    position:relative;
+  }
+  main{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .ScoreBoard{
+    top: 0;
+  }
+  section.Controls{
+    top: 0vh;
+    margin: auto;
+  }
+  .gameContainer{
+    width: fit-content;
+  }
+  .Computer{
+    padding: 0;
+  }
+  .Results{
+    width: fit-content;
+    background-color: rgba(3, 54, 22, 0.89);
+  }
+  header{
+    margin: auto;
+    padding: 0;
+    padding-top: 20px;
+  }
 }

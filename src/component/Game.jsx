@@ -91,8 +91,8 @@ const Game = ()=>{
             updateTotalNumberForComputer(ComputerTotal)
             updateGameWinner(() =>{
                 if(PlayerTotal > ComputerTotal ){
-                    // sound = "../src/assets/audio/winning.wav"
-                    audioRef.current.src = "../src/assets/audio/winning.wav"
+                    // sound = "../src/assets/audio/winning2.wav"
+                    audioRef.current.src = "../src/assets/audio/winning2.mp3"
                     audioRef.current.currentTime = 0
                     audioRef.current.play()
                     return "Player wins"
@@ -129,12 +129,6 @@ const Game = ()=>{
             })
         )})
     }
-    const startGame = (e)=>{
-        audioRef.current.src = "../src/assets/audio/start.wav"
-        audioRef.current.currentTime = 0
-        audioRef.current.play()
-        e.target.closest("section").classList.toggle("active")
-    }
     return(
         <>
         {/* Header */}
@@ -148,6 +142,32 @@ const Game = ()=>{
         </header>
         {/* Main */}
         <main>
+            {/* ScoreBoard */}
+            <section className="ScoreBoard">
+                Score : <code>{score}</code>
+            </section>
+            {/* Controls */}
+            <section className="Controls">
+                <button onClick = {()=>newPlay()}> <img style={{width: "100%", height:"100%"}} src={mainLogo} alt="" /></button>
+                {/* <button onClick = {()=>startPlay()}> - </button> */}
+                <div className={`Mode active`} ref={buttonRef} onClick={(e)=>{
+                    console.log(buttonRef.current)
+                    e.target.classList.toggle("active")
+                }}>
+                    Mode
+                    <article>
+                        {
+                            gameMode.map((gamemode, index)=>{
+                                return (
+                                    <span key={index} className = {gamemode.IsClassActive ? "active" : undefined} onClick={()=>SettingMode(gamemode.number)}>
+                                        {gamemode.mode} {arrOfEmoji[index]}
+                                    </span>
+                                )
+                            })
+                        }
+                    </article>
+                </div>
+            </section>
             {/* Computer */}
             <section className="Computer">
                 <p>Computer</p>
@@ -176,45 +196,14 @@ const Game = ()=>{
                     </section>
                 </div>
             </section>
-            {/* Controls */}
-            <section className="Controls">
-                <button onClick = {()=>newPlay()}> <img style={{width: "100%", height:"100%"}} src={mainLogo} alt="" /></button>
-                {/* <button onClick = {()=>startPlay()}> - </button> */}
-                <div className={`Mode active`} ref={buttonRef} onClick={(e)=>{
-                    console.log(buttonRef.current)
-                    e.target.classList.toggle("active")
-                }}>
-                    Mode
-                    <article>
-                        {
-                            gameMode.map((gamemode, index)=>{
-                                return (
-                                    <span key={index} className = {gamemode.IsClassActive ? "active" : undefined} onClick={()=>SettingMode(gamemode.number)}>
-                                        {gamemode.mode} {arrOfEmoji[index]}
-                                    </span>
-                                )
-                            })
-                        }
-                    </article>
-                </div>
-            </section>
             {/* Results */}
             <section className={`Results ${active}`}>
                 <code>
-                    {/* borderRadius */}
                     {numberForPlayer.length == count && gameWinner}
                  </code>
             </section>
-            {/* ScoreBoard */}
-            <section className="ScoreBoard">
-                Score : <code>{score}</code>
-            </section>
             <section className="audio">
                 <audio ref={audioRef} src={null} controls ></audio>
-            </section>
-            <section className="gameTips active" >
-            <p>We have three game modes hard Intermediate and Easy. Each game mode has the number of dice to be choosen. The player has to choose the dice covered in black to reveal the main dice. The highest total number of dice is the winner. Click on the dice icon below to roll dice</p>
-            <button onClick={(e)=>startGame(e)}> Start</button>
             </section>
         </main>
         </>
